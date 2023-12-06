@@ -27,8 +27,14 @@ public class Queue<T> {
 	//Constructor that sets head to a new node with value as the
 	//parameter. This should also set the tail to point to the new node.
 	public Queue(T value) {
-		head = new dNode<T>(value);
-		head.next = tail;
+		dNode<T> newNode = new dNode<T>(value);
+		
+		this.head = newNode;
+		this.tail = newNode;
+		this.head.next = tail;
+		this.head.prev = tail;
+		this.tail.next = head;
+		this.tail.prev = head;
 		size =1;
 	}
 	
@@ -38,19 +44,24 @@ public class Queue<T> {
 		dNode<T> newNode = new dNode<T>(value);
 		
 		dNode<T> current = head;
-		while(current!=tail) {
-			if(size==1) {
-				head.next = newNode;
+		if(size==0) {
+			head = newNode;
+			tail = newNode;
+			head.prev = tail;
+			tail.next = head;
+				/*head.next = newNode;
 				tail = newNode;
-				tail.next = head;
-			}
-			if(current.next == tail) {
-				newNode.next = head;
-				current.next=tail;
-				tail = newNode;
-				
-			}
-			current = current.next;
+				tail.next = head;*/
+		}else{
+			/*newNode.next = head;
+			current.next=tail;
+			tail = newNode;*/
+			tail.next = newNode;
+			newNode.prev = tail;
+			tail= newNode;
+			tail.next = head;
+			head.prev = tail;
+			
 		}
 		size++;
 	}
@@ -58,19 +69,28 @@ public class Queue<T> {
 //	/Removes the first element of the queue and returns it’s data.
 	//If the queue is empty, return null.
 	public T dequeue() {
+		
+		size--;
 		return null;
+		
 	}
 	
 	
 	//Returns true if the list is empty, false otherwise.
 	public boolean isEmpty() {
+		if(size==0) {
+			return true;
+		}
 		return false;
 	}
 	
 	//Removes the first element and places it at the “back” of
 	//the queue.
 	public void sendToBack() {
-		
+		if(size!=0) {
+			T value = dequeue();
+			enqueue(value);
+		}
 	}
 	
 	//Returns the number of nodes currently chained in the list.
@@ -83,7 +103,7 @@ public class Queue<T> {
 	public String toString( ) {
 		StringBuilder word = new StringBuilder();
 		dNode<T> current= head;
-		while (current!=tail) {
+		/*while (current!=tail) {
 			word.append(current.data + "");
 			
 			if(current.next!=tail) {
@@ -91,6 +111,20 @@ public class Queue<T> {
 			}
 			
 			current = current.next;
+		}*/
+		if(current!=null) {
+			do
+			{
+				word.append(current.data + "");
+				if(current.next!=tail) {
+					word.append(" | ");
+				}
+				
+				current = current.next;
+				
+			}while(current!=head);
+		}else {
+			word = word.append("list = "+ isEmpty()+"");
 		}
 	return word.toString();
 	}

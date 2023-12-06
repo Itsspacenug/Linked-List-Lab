@@ -6,6 +6,6 @@ public class QueuesTesting {
 		Queue<Integer> list = new Queue<Integer>(1);
 		list.enqueue(2);
 		System.out.println(list.toString());
-		
+		System.out.println("Size = "+list.size());
 	}
 }
