@@ -66,12 +66,23 @@ public class Queue<T> {
 		size++;
 	}
 	
-//	/Removes the first element of the queue and returns it’s data.
+//	/Removes the first element of the queue and returns itï¿½s data.
 	//If the queue is empty, return null.
 	public T dequeue() {
+		if(size ==0) {
+			return null;
+		}
+		dNode<T> current = head;
+		/*while(current!= tail) {
+			
+		}*/
+		tail.next = head.next;
+		current = head;
+		head = head.next;
+		head.prev = tail;
 		
 		size--;
-		return null;
+		return current.data;
 		
 	}
 	
@@ -84,7 +95,7 @@ public class Queue<T> {
 		return false;
 	}
 	
-	//Removes the first element and places it at the “back” of
+	//Removes the first element and places it at the ï¿½backï¿½ of
 	//the queue.
 	public void sendToBack() {
 		if(size!=0) {
@@ -98,8 +109,8 @@ public class Queue<T> {
 		return size;
 	}
 	
-	//Returns a String of the list in this format : “item1 | item2 |
-	//...| item99”. You should NOT be printing in this method.
+	//Returns a String of the list in this format : ï¿½item1 | item2 |
+	//...| item99ï¿½. You should NOT be printing in this method.
 	public String toString( ) {
 		StringBuilder word = new StringBuilder();
 		dNode<T> current= head;
@@ -116,7 +127,7 @@ public class Queue<T> {
 			do
 			{
 				word.append(current.data + "");
-				if(current.next!=tail) {
+				if(current!=tail) {
 					word.append(" | ");
 				}
 				

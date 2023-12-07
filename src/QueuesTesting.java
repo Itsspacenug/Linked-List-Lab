@@ -5,7 +5,12 @@ public class QueuesTesting {
 	{
 		Queue<Integer> list = new Queue<Integer>(1);
 		list.enqueue(2);
+		list.enqueue(3);
+		list.enqueue(4);
+		System.out.println(list.toString());
+		list.sendToBack();
 		System.out.println(list.toString());
 		System.out.println("Size = "+list.size());
+		System.out.println(list.isEmpty());
 	}
 }
