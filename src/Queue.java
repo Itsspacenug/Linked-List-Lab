@@ -1,3 +1,4 @@
+//Queue.java
 //Aaron Nguyen
 /*//Purpose: This class must implement a
 connected list of dNode objects, and you must not import the built-in LinkedList
@@ -13,15 +14,17 @@ You can always create more methods than the required methods.
  * Needs to complete the extra credit because you ass has a horrible grade
  */
 public class Queue<T> {
-	private dNode<T> head; //sets head variable
-	private dNode<T> tail; //sets tail variable
+	public dNode<T> head; //sets head variable
+	public dNode<T> tail; //sets tail variable
 	private int size; //sets size variable for size() method
+	private int capacity;
 	
 	//sets head and tail to null
 	public Queue(){ //default constructor that sets head and tail to null and size to 0
 		head = null;
 		tail = null;
 		size = 0;
+		capacity = Integer.MAX_VALUE;
 	}
 	
 	//Constructor that sets head to a new node with value as the
@@ -35,13 +38,33 @@ public class Queue<T> {
 		this.head.prev = tail; //completes the loop
 		this.tail.next = head; //completes the loop
 		this.tail.prev = head;
+		this.size =1;
+		this.capacity = Integer.MAX_VALUE;
+	}
+	
+	/*Add another attribute named capacity that will be used to limit the
+	number of items that can be contained in the list at once. When adding values to the
+	list, you should throw an IllegalStateException if no space is currently available.*/
+	public Queue(T value, int cap) { //Constructor that takes in a value that is set to the head and tail
+		dNode<T> newNode = new dNode<T>(value);
+		
+		this.head = newNode;
+		this.tail = newNode;
+		this.head.next = tail;
+		this.head.prev = tail; //completes the loop
+		this.tail.next = head; //completes the loop
+		this.tail.prev = head;
 		size =1;
+		capacity = cap;
 	}
 	
 	/*Adds the given value to the end of the Queue. Keep
 	 in mind that our linked list is circular.*/
 	public void enqueue(T value) {
 		dNode<T> newNode = new dNode<T>(value);
+		if(size+1>capacity) {
+			throw new IllegalStateException("Cannot add more elements because queue is at capacity");
+		}
 		if(size==0) { //one off chance if the default constructor was used so it does what the regular one perameter contructor does
 			head = newNode;
 			tail = newNode;
@@ -55,7 +78,7 @@ public class Queue<T> {
 			head.prev = tail; //completes the loop
 			
 		}
-		size++; //changes the size variable to accurately represent the size 
+		size++;//changes the size variable to accurately represent the size 
 	}
 	
 //	/Removes the first element of the queue and returns it�s data.
@@ -71,8 +94,8 @@ public class Queue<T> {
 			return null; //IS THIS WHAT WE PRINT IF WE ARE REMOVING THE LAST ELEMENT
 		}else {
 		dNode<T> current = head; // temp variable 
-		tail.next = head.next; //adds pointer to next element after the head
-		head = head.next; //sets the head as the element after dead
+		tail.next = head.next; //adds pointer to next element after the head from tail
+		head = head.next; //sets the head as the element after head
 		head.prev = tail; //adds pointer backwards to tail
 		
 		size--; //changes the size variable to accurately represent the size 
@@ -102,6 +125,20 @@ public class Queue<T> {
 	//Returns the number of nodes currently chained in the list.
 	public int size( ) {
 		return size; //returns the size variable 
+	}
+	
+	//returns capacity variable
+	public int capacity() {
+		return capacity;
+	}
+	
+	//Thank about what to do if the new capacity is smaller than the current size.
+	public void changeCapacity(int cap) {
+		if(size>capacity) {
+			throw new IllegalStateException("The capacity cannot be less than the size");
+		}else {
+			capacity = cap;
+		}
 	}
 	
 	//Returns a String of the list in this format : �item1 | item2 |
