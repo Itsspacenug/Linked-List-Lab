@@ -7,7 +7,14 @@ public class QueuesTesting {
 		list.enqueue(2);
 		list.enqueue(3);
 		list.enqueue(4);
-		System.out.println(list.toString());
+		list.dequeue();
+		list.dequeue();
+		list.dequeue();
+		list.dequeue();
+		list.enqueue(1);
+		list.enqueue(2);
+		list.enqueue(3);
+		list.enqueue(4);
 		list.sendToBack();
 		System.out.println(list.toString());
 		System.out.println("Size = "+list.size());
